@@ -15,7 +15,7 @@
       <v-card-text v-if="templates.length < 1">
         Consider adding templates crafted for Dockyard below or creating your own
         with <a href="https://shipwright.dockyard.sh">Shipwright</a> <br />
-        https://raw.githubusercontent.com/khulnasoft/selfhosted_templates/master/Template/dockyard.json
+        https://raw.githubusercontent.com/khulnasoft-lab/dockyard_templates/master/Template/dockyard.json
       </v-card-text>
       <v-card-text>
         <v-form ref="form" @submit.prevent="submit">

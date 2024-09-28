@@ -64,7 +64,7 @@ Currently Dockyard is compatible with portainer templates. You'll add a template
 We recommend starting with:
 
 ```
-https://raw.githubusercontent.com/khulnasoft/selfhosted_templates/dockyard/Template/template.json
+https://raw.githubusercontent.com/khulnasoft-lab/dockyard_templates/dockyard/Template/template.json
 ```
 
 In templates you are able to define variables (starting with `!`) to have them automatically replaced by whatever variable the user has set in their server settings (ie. `!config` will be replaced by `/dockyard/AppData/Config` by default).
