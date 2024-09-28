@@ -22,6 +22,7 @@ COPY ./backend/requirements.txt ./
 
 # Install build dependencies and system libraries
 RUN apk add --no-cache \
+    build-base \
     gcc \
     g++ \
     libffi-dev \
@@ -32,8 +33,11 @@ RUN apk add --no-cache \
     jpeg-dev \
     zlib-dev \
     yaml-dev \
+    python3-dev \
+    ruby-dev \
     nginx \
-    curl
+    curl \
+    cargo  # Install Rust's cargo package manager to support Rust dependencies
 
 # Install Docker Compose 2.x as a standalone binary
 RUN curl -L "https://github.com/docker/compose/releases/download/v2.20.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && \
@@ -49,7 +53,7 @@ RUN pip3 install -r requirements.txt --no-cache-dir --verbose
 RUN apk add --no-cache ruby-dev && gem install sass --verbose && apk del ruby-dev
 
 # Clean up build dependencies
-RUN apk del gcc g++ libffi-dev musl-dev && \
+RUN apk del build-base gcc g++ libffi-dev musl-dev && \
     rm -rf /root/.cache /tmp/*
 
 # Copy the backend code
