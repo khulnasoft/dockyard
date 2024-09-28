@@ -1,238 +1,114 @@
-# Flask-Boilerplate
+![logo](https://raw.githubusercontent.com/khulnasoft/Dockyard/master/readme_media/Dockyard_logo_1_dark.png "templates")
 
-A Flask application template with the boilerplate code already done for you.
+[![Docker Hub Pulls](https://img.shields.io/docker/pulls/khulnasoft/dockyard?color=%2341B883&label=Docker%20Pulls&logo=docker&logoColor=%2341B883&style=for-the-badge)](https://hub.docker.com/r/khulnasoft/dockyard)
+[![Docker Image Size](https://img.shields.io/docker/image-size/khulnasoft/dockyard/vue?color=%2341B883&label=Image%20Size&logo=docker&logoColor=%2341B883&style=for-the-badge)](https://hub.docker.com/r/khulnasoft/dockyard)
+[![Open Collective](https://img.shields.io/opencollective/all/khulnasoft.svg?color=%2341B883&logoColor=%2341B883&style=for-the-badge&label=Supporters&logo=open%20collective)](https://opencollective.com/khulnasoft "please consider helping me by either donating or contributing")
 
+<a href="https://m.do.co/c/d4aa430d72d9">
+<img src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/PoweredByDO/DO_Powered_by_Badge_blue.png" width="30%"  alt="Dockyard Logo From Github"/>
+</a>
 
-**Documentation available at [http://khulnasoft.github.io/flask-boilerplate](http://khulnasoft.github.io/flask-boilerplate).**
+## Dockyard
 
-## What's included?
+Dockyard is a container management UI with a focus on templates and 1-click deployments.
 
-* Blueprints
-* User and permissions management
-* Flask-SQLAlchemy for databases
-* Flask-WTF for forms
-* Flask-Assets for asset management and SCSS compilation
-* Flask-Mail for sending emails
-* gzip compression
-* Redis Queue for handling asynchronous tasks
-* ZXCVBN password strength checker
-* CKEditor for editing pages
+**I'm currently rewriting the backend in Typescript as an attempt to have a language that more people would contribute to. You can follow development of that [here](https://github.com/khulnasoft/dockyard-dev).**
 
-## Demos
+**Please note, that while we are rewriting the back end. The Dockyard.sh website is outdated on its instructions, please visit https://dev.dockyard.sh for now. The main Dockyard.sh site will be updated with the new release.**
 
-Home Page:
+## Demo:
 
-![home](readme_media/home.gif "home")
+![Tempaltes](https://raw.githubusercontent.com/khulnasoft/Dockyard/master/readme_media/Dockyard-Demo.gif "templates")
 
-Registering User:
+## Installation:
 
-![registering](readme_media/register.gif "register")
+Currently only linux has been verified as working but we are open to the idea of supporting windows eventually as well.
 
-Admin Editing Page:
+**Keep in mind, this is an alpha so the risk of data loss is real and it may not be stable**
 
-![edit page](readme_media/editpage.gif "editpage")
+Installation documentation can be found [here](https://dev.dockyard.sh/docs/Installation/Install).
 
-Admin Editing Users:
+Check out the getting started guide if this is the first time you've used Dockyard: https://dev.dockyard.sh/docs/Installation/Getting_Started
 
-![edit user](readme_media/edituser.gif "edituser")
+**Dockyard is also available via the DigitalOcean marketplace:**
 
+[![DigitalOcean](https://raw.githubusercontent.com/khulnasoft/Dockyard/master/readme_media/do-btn-blue.svg)](https://marketplace.digitalocean.com/apps/dockyard?refcode=b68dee19dbf6)
 
-## Setting up
+**We can also be found on Linode**
 
-##### Create your own repository from this Template
+[`<img src="https://www.linode.com/wp-content/uploads/2021/01/Linode-Logo-Black.svg" width="200" >`](https://www.linode.com/marketplace/apps/khulnasoft/dockyard/)
 
-Navigate to the [main project page](https://github.com/khulnasoft/flask-boilerplate) and click the big, green "Use this template" button at the top right of the page. Give your new repository a name and save it.
+## Features So Far:
 
-##### Clone the repository 
+* Vuetify UI Framework
+* Basic Container Management
+* Template Framework
+* Easy Template Updating
+* Centralized settings for volume management and similar QOL functionality.
+* Docker-Compose Compatibility
+* Advanced Container Management (Edit/Modify)
 
-```
-$ git clone https://github.com/YOUR_USERNAME/REPO_NAME.git
-$ cd REPO_NAME
-```
+## Planned Features:
 
-##### Initialize a virtual environment
+* Container Monitoring
+* Easy access to container interfaces
+* User Management
+* Scheduled Jobs
 
-Windows:
-```
-$ python3 -m venv venv
-$ venv\Scripts\activate.bat
-```
+*If you want something that's not planned please open a feature request issue and we'll see about getting it added.*
 
-Unix/MacOS:
-```
-$ python3 -m venv venv
-$ source venv/bin/activate
-```
-Learn more in [the documentation](https://docs.python.org/3/library/venv.html#creating-virtual-environments).
+## Templating:
 
-Note: if you are using a python before 3.3, it doesn't come with venv. Install [virtualenv](https://docs.python-guide.org/dev/virtualenvs/#lower-level-virtualenv) with pip instead.
+Currently Dockyard is compatible with portainer templates. You'll add a template url in the "Add Template" settings. The the template will be read, separated into apps, and imported into the database. The apps associated with the templates are linked via a db relationship so when the template is removed, so are the apps associated with it. We store the template url as well so we can enable updating templates with a button press.
 
-##### (If you're on a Mac) Make sure xcode tools are installed
+We recommend starting with:
 
 ```
-$ xcode-select --install
+https://raw.githubusercontent.com/khulnasoft/selfhosted_templates/dockyard/Template/template.json
 ```
 
-##### Add Environment Variables
+In templates you are able to define variables (starting with `!`) to have them automatically replaced by whatever variable the user has set in their server settings (ie. `!config` will be replaced by `/dockyard/AppData/Config` by default).
 
-Create a file called `config.env` that contains environment variables. **Very important: do not include the `config.env` file in any commits. This should remain private.** You will manually maintain this file locally, and keep it in sync on your host.
+## Notes for ARM devices
 
-Variables declared in file have the following format: `ENVIRONMENT_VARIABLE=value`. You may also wrap values in double quotes like `ENVIRONMENT_VARIABLE="value with spaces"`.
-
-1. In order for Flask to run, there must be a `SECRET_KEY` variable declared. Generating one is simple with Python 3:
-
-   ```
-   $ python3 -c "import secrets; print(secrets.token_hex(16))"
-   ```
-
-   This will give you a 32-character string. Copy this string and add it to your `config.env`:
-
-   ```
-   SECRET_KEY=Generated_Random_String
-   ```
-
-2. The mailing environment variables can be set as the following.
-   We recommend using [Sendgrid](https://sendgrid.com) for a mailing SMTP server, but anything else will work as well.
-
-   ```
-   MAIL_USERNAME=SendgridUsername
-   MAIL_PASSWORD=SendgridPassword
-   ```
-
-Other useful variables include:
-
-| Variable        | Default   | Discussion  |
-| --------------- |-------------| -----|
-| `ADMIN_EMAIL`   | `flask-boilerplate-admin@example.com` | email for your first admin account |
-| `ADMIN_PASSWORD`| `password`                     | password for your first admin account |
-| `DATABASE_URL`  | `data-dev.sqlite`              | Database URL. Can be Postgres, sqlite, etc. |
-| `REDISTOGO_URL` | `http://localhost:6379`        | [Redis To Go](https://redistogo.com) URL or any redis server url |
-| `RAYGUN_APIKEY` | `None`                         | API key for [Raygun](https://raygun.com/raygun-providers/python), a crash and performance monitoring service |
-| `FLASK_CONFIG`  | `default`                      | can be `development`, `production`, `default`, `heroku`, `unix`, or `testing`. Most of the time you will use `development` or `production`. |
-
-
-##### Install the dependencies
+If you're on arm and graphs aren't showing up add the following to your cmdline.txt:
 
 ```
-$ pip install -r requirements.txt
+cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1
 ```
 
-##### Other dependencies for running locally
+## Supported Environment Variables
 
-You need [Redis](http://redis.io/), and [Sass](http://sass-lang.com/). Chances are, these commands will work:
+You can utilize the following environment variables in Dockyard. None of them are mandatory.
 
+| Variable     | Description                                                                                                                                                                             |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| PUID         | Set userid that the container will run as.                                                                                                                                              |
+| PGID         | Set groupid that the container will run as.                                                                                                                                             |
+| SECRET_KEY   | Setting this to a random string ensures you won't be logged out in between reboots of Dockyard.                                                                                            |
+| ADMIN_EMAIL  | This sets the email for the default Dockyard user.                                                                                                                                         |
+| DISABLE_AUTH | This disables authentication on the backend of Dockyard. It's not recommended unless you're using something like Authelia to manage authentication.                                        |
+| DATABASE_URL | If you want to have Dockyard use a database like SQL instead of the built in sqlite on you can put that info here in the following format:`postgresql://user:password@postgresserver/db` |
+| COMPOSE_DIR  | This is the path inside the container which contains your folders that have docker compose projects. (*compose tag only*)                                                             |
 
-**Sass:**
+## Notes for installing Docker and Dockyard on WSL2 platform under Windows
 
-```
-$ gem install sass
-```
-
-**Redis:**
-
-_Mac (using [homebrew](http://brew.sh/)):_
-
-```
-$ brew install redis
-```
-
-_Linux:_
+If you’re running under WSL2 inside Windows, because of the difference in how permissions are handled. Your essentially inside of a Linux machine accessing a Windows file system. You will need to run after installation before adding the Dockyard container:
 
 ```
-$ sudo apt-get install redis-server
+$ sudo usermod -aG docker $USER
 ```
 
-You will also need to install **PostgresQL**
+Additional information about this can be found in the [Post-installation steps for Linux](https://docs.docker.com/engine/install/linux-postinstall/)
 
-_Mac (using homebrew):_
+## Update button not working?
 
-```
-brew install postgresql
-```
-
-_Linux (based on this [issue](https://github.com/khulnasoft/flask-boilerplate/issues/96)):_
+*If the built in update button isn't working for you try the following command:*
 
 ```
-sudo apt-get install libpq-dev
+docker run --rm -d -v /var/run/docker.sock:/var/run/docker.sock containrrr/watchtower:latest --cleanup --run-once <container-name>
 ```
-
-
-##### Create the database
-
-```
-$ python manage.py recreate_db
-```
-
-##### Other setup (e.g. creating roles in database)
-
-```
-$ python manage.py setup_dev
-```
-
-Note that this will create an admin user with email and password specified by the `ADMIN_EMAIL` and `ADMIN_PASSWORD` config variables. If not specified, they are both `flask-boilerplate-admin@example.com` and `password` respectively.
-
-##### [Optional] Add fake data to the database
-
-```
-$ python manage.py add_fake_data
-```
-
-## Running the app
-
-```
-$ source env/bin/activate
-$ honcho start -e config.env -f Local
-```
-
-For Windows users having issues with binding to a redis port locally, refer to [this issue](https://github.com/khulnasoft/flask-boilerplate/issues/132).
-
-## Gettin up and running with Docker and docker-compose:
-
-##### Clone the repository 
-```
-$ git clone https://github.com/YOUR_USERNAME/REPO_NAME.git
-$ cd REPO_NAME
-```
-##### Create and run the images:
-
-```
-$ docker-compose up
-```
-
-##### Create database and initial data for development:
-
-```
-$ docker-compose exec server ./init_database.sh
-```
-
-It will deploy 5 docker images:
-
-- server: Flask app running in [http://localhost:5000](http://localhost:5000).
-- worker: Worker ready to get tasks.
-- postgres: Postgres SQL isolated from the app.
-- adminer: Web client for database management, running in [http://localhost:8080](http://localhost:8080).
-- redis: Redis SQL isolated from the app
-
-
-## Formatting code
-
-Before you submit changes to flask-boilerplate, you may want to autoformat your code with `python manage.py format`.
-
-
-## Contributing
-
-Contributions are welcome! Please refer to our [Code of Conduct](./CONDUCT.md) for more information.
-
-## Documentation Changes
-
-To make changes to the documentation refer to the [Mkdocs documentation](http://www.mkdocs.org/#installation) for setup.
-
-To create a new documentation page, add a file to the `docs/` directory and edit `mkdocs.yml` to reference the file.
-
-When the new files are merged into `master` and pushed to github. Run `mkdocs gh-deploy` to update the online documentation.
-
-## Related
-https://medium.freecodecamp.com/how-we-got-a-2-year-old-repo-trending-on-github-in-just-48-hours-12151039d78b#.se9jwnfk5
 
 ## License
+
 [MIT License](LICENSE.md)

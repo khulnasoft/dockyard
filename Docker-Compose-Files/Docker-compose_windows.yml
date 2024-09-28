@@ -1,0 +1,15 @@
+---
+version: "3"
+services:
+  dockyard:
+    container_name: dockyard
+    restart: unless-stopped
+    ports:
+      - 8000:8000
+    volumes:
+      - dockyard:/config
+      - /var/run/docker.sock:/var/run/docker.sock
+    image: khulnasoft/dockyard
+
+volumes:
+  dockyard:
