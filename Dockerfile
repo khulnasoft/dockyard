@@ -22,10 +22,8 @@ COPY ./backend/requirements.txt ./
 
 # Install build dependencies and system libraries
 RUN apk add --no-cache \
-    build-base \
     gcc \
     g++ \
-    make \
     libffi-dev \
     openssl-dev \
     musl-dev \
@@ -34,8 +32,6 @@ RUN apk add --no-cache \
     jpeg-dev \
     zlib-dev \
     yaml-dev \
-    python3-dev \
-    ruby-dev \
     nginx \
     curl
 
@@ -50,10 +46,10 @@ RUN pip3 install --upgrade pip setuptools wheel
 RUN pip3 install -r requirements.txt --no-cache-dir --verbose
 
 # Install SASS via gem
-RUN gem install sass --verbose
+RUN apk add --no-cache ruby-dev && gem install sass --verbose && apk del ruby-dev
 
 # Clean up build dependencies
-RUN apk del --purge build-base && \
+RUN apk del gcc g++ libffi-dev musl-dev && \
     rm -rf /root/.cache /tmp/*
 
 # Copy the backend code
